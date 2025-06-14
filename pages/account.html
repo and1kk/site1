@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Вход в чат</title>
+    <script src="/scripts/account.js" defer type="module"></script>
+    <style>
+        /* Reset */
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(145deg, #2a2a2a, #3c3c3c, #4a4a4a);
+            color: #d0d0d0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        
+        .login-container {
+            background: rgba(50, 50, 50, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 40px 28px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            animation: slideIn 0.5s ease-out forwards;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        h2 {
+            font-weight: 600;
+            font-size: 1.8rem;
+            margin-bottom: 24px;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        
+        .login-input {
+            background: rgba(70, 70, 70, 0.7);
+            border: none;
+            padding: 14px 16px;
+            border-radius: 8px;
+            font-size: 1rem;
+            color: #d0d0d0;
+            outline: none;
+            width: 100%;
+            margin-bottom: 12px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .login-input::placeholder {
+            color: #a0a0a0;
+        }
+        
+        .login-input:focus {
+            background: rgba(90, 90, 90, 0.7);
+            border-color: #aaaaaa;
+            box-shadow: 0 0 6px rgba(170, 170, 170, 0.2);
+        }
+        
+        .login-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(60, 60, 60, 0.7);
+            backdrop-filter: blur(8px);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #d0d0d0;
+            font-weight: 500;
+            font-size: 1rem;
+            padding: 12px 0;
+            margin-top: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            justify-content: center;
+            width: 100%;
+        }
+        
+        .login-btn img {
+            width: 22px;
+            height: 22px;
+            filter: brightness(0) invert(1);
+        }
+        
+        .login-btn.google img {
+            background: transparent;
+            border-radius: 50%;
+        }
+        
+        .login-btn:hover {
+            background: rgba(100, 100, 100, 0.7);
+            transform: translateY(-1px);
+            box-shadow: 0 3px 10px rgba(100, 100, 100, 0.3);
+            color: #ffffff;
+        }
+        
+        .login-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 5px rgba(100, 100, 100, 0.2);
+        }
+        
+        .submit-btn {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(8px);
+            color: #ffffff;
+            font-weight: 600;
+            padding: 14px 0;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+            transition: left 0.4s ease;
+        }
+        
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+        
+        .submit-btn:hover {
+            background: rgba(255, 255, 255, 0.18);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.25);
+        }
+        
+        .submit-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 6px rgba(255, 255, 255, 0.15);
+        }
+        
+        .error {
+            color: #ff6666;
+            margin-top: 12px;
+            font-size: 0.85rem;
+            min-height: 18px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .error.show {
+            opacity: 1;
+        }
+        /* Animations */
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        /* Responsive */
+        
+        @media (max-width: 400px) {
+            .login-container {
+                padding: 28px 20px;
+            }
+            .login-btn,
+            .submit-btn {
+                font-size: 0.95rem;
+                padding: 10px 0;
+            }
+            h2 {
+                font-size: 1.6rem;
+            }
+            button {
+                font-size: 0.9rem;
+                padding: 8px 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="login-container" role="main" aria-label="Форма входа в чат">
+        <h2>Вход в чат</h2>
+        <form id="login-form" novalidate>
+            <input type="email" class="login-input" id="email-input" name="email" placeholder="Email" autocomplete="username" required aria-required="true" />
+            <input type="password" class="login-input" id="password-input" name="password" placeholder="Пароль" autocomplete="current-password" required aria-required="true" />
+            <button type="submit" class="submit-btn" id="email-submit">Войти</button>
+        </form>
+
+        <button class="login-btn google" id="google-sign-in" aria-label="Войти через Google">
+            <img src="https://img.icons8.com/ios-filled/24/google-logo.png" alt="Google icon" />
+            Войти через Google
+        </button>
+        <button class="login-btn" id="github-sign-in" aria-label="Войти через GitHub">
+            <img src="https://github.com/favicon.ico" alt="GitHub icon" />
+            Войти через GitHub
+        </button>
+        <button class="login-btn" id="phone-sign-in" aria-label="Войти через Телефон">
+            <img src="https://img.icons8.com/ios-filled/24/phone.png" alt="Phone icon" />
+            Войти через Телефон
+        </button>
+
+        <button class="submit-btn" id="logout-btn" hidden>Выйти</button>
+
+        <p class="error" id="error-message" role="alert" aria-live="assertive"></p>
+    </main>
+</body>
+
+</html>
